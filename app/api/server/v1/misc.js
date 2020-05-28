@@ -179,6 +179,8 @@ API.v1.addRoute('spotlight', { authRequired: true }, {
 
 API.v1.addRoute('directory', { authRequired: true }, {
 	get() {
+		return API.v1.failure('管理员关闭了浏览目录的功能');
+
 		const { offset, count } = this.getPaginationItems();
 		const { sort, query } = this.parseJsonQuery();
 
