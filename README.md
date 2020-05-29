@@ -432,3 +432,11 @@ Rocket.Chat will be free forever, but you can help us speed up the development!
 
 
 [BountySource](https://www.bountysource.com/teams/rocketchat)
+
+# How To Build Docker Image
+```
+meteor build --server-only --directory /tmp/rc-build
+cp .docker/Dockerfile /tmp/rc-build
+cd /tmp/rc-build
+docker build -t clawtit/rocket.chat:3.3.0-1 .
+```
