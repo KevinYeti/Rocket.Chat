@@ -21,7 +21,7 @@ export async function findUsersToAutocomplete({ uid, selector }) {
 		limit: 10,
 	};
 
-	const users = await Users.findActiveByUsernameOrNameRegexWithExceptionsAndConditions(new RegExp(s.escapeRegExp(selector.term), 'i'), exceptions, conditions, options).toArray();
+	const users = await Users.findActiveByUsernameOrNameExactWithExceptionsAndConditions(selector.term, exceptions, conditions, options).toArray();
 
 	return {
 		items: users,

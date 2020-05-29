@@ -140,6 +140,39 @@ export class UsersRaw extends BaseRaw {
 		return this.find(query, options);
 	}
 
+	findActiveByUsernameOrNameExactWithExceptionsAndConditions(strName, exceptions, conditions, options) {
+		if (exceptions == null) { exceptions = []; }
+		if (conditions == null) { conditions = {}; }
+		if (options == null) { options = {}; }
+		if (!Array.isArray(exceptions)) {
+			exceptions = [exceptions];
+		}
+
+		const query = {
+			$or: [{
+				username: strName,
+			}, {
+				name: strName,
+			}],
+			active: true,
+			type: {
+				$in: ['user', 'bot'],
+			},
+			$and: [{
+				username: {
+					$exists: true,
+				},
+			}, {
+				username: {
+					$nin: exceptions,
+				},
+			}],
+			...conditions,
+		};
+
+		return this.find(query, options);
+	}
+
 	countAllAgentsStatus({ departmentId = undefined }) {
 		const match = {
 			$match: {
